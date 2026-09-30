@@ -1,5 +1,16 @@
 import { RecipeList } from './features/recipes/components/RecipeList'
 import type { Recipe } from './features/recipes/recipeTypes'
+import { useState } from 'react'
+import { RecipeFilters } from './features/recipes/components/RecipeFilters'
+import { filterRecipes } from './features/recipes/recipeFilters'
+
+const initialFilters = {
+  search: '',
+  category: 'Alle' as const,
+  needleSize: 'Alle' as const,
+  difficulty: 'Alle' as const,
+  used: 'Alle' as const,
+}
 
 const recipes: Recipe[] = [
   {
@@ -25,12 +36,20 @@ const recipes: Recipe[] = [
 ]
 
 function App() {
+  const [filters, setFilters] = useState<Parameters<typeof filterRecipes>[1]>(initialFilters)
+  
+  const filteredRecipes = filterRecipes(recipes, filters)
   return (
     <main>
       <h1>Strikkeapp</h1>
       <p>Din strikkeorganisator!!</p>
 
-      <RecipeList recipes={recipes} />
+      <RecipeFilters
+        filters={filters}
+        onChange={setFilters}
+      />
+
+      <RecipeList recipes={filteredRecipes} />
     </main>
   )
 }
