@@ -1,23 +1,23 @@
-import type { Recipe } from './recipeTypes'
+import type { Recipe } from "./recipeTypes";
 
-const STORAGE_KEY = 'strikkeoppskrift-recipes'
+const STORAGE_KEY = "strikkeoppskrift-recipes";
 
 export function getRecipes(): Recipe[] {
-  const storedRecipes = localStorage.getItem(STORAGE_KEY)
+  const storedRecipes = localStorage.getItem(STORAGE_KEY);
 
   if (!storedRecipes) {
-    return []
+    return [];
   }
 
-  return JSON.parse(storedRecipes) as Recipe[]
+  return JSON.parse(storedRecipes) as Recipe[];
 }
 
 export function saveRecipes(recipes: Recipe[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
 }
 
 export function addRecipe(recipe: Recipe): void {
-  const recipes = getRecipes()
+  const recipes = getRecipes();
 
-  saveRecipes([...recipes, recipe])
+  saveRecipes([...recipes, recipe]);
 }
