@@ -1,18 +1,12 @@
-import {
-  recipeCategories,
-  recipeDifficulties,
-} from '../recipeTypes'
-import type { RecipeFilters as RecipeFiltersState } from '../recipeFilters'
+import { recipeCategories, recipeDifficulties } from "../recipeTypes";
+import type { RecipeFilters as RecipeFiltersState } from "../recipeFilters";
 
 interface RecipeFiltersProps {
-  filters: RecipeFiltersState
-  onChange: (filters: RecipeFiltersState) => void
+  filters: RecipeFiltersState;
+  onChange: (filters: RecipeFiltersState) => void;
 }
 
-export function RecipeFilters({
-  filters,
-  onChange,
-}: RecipeFiltersProps) {
+export function RecipeFilters({ filters, onChange }: RecipeFiltersProps) {
   return (
     <section aria-label="Filtrer oppskrifter">
       <label>
@@ -36,7 +30,7 @@ export function RecipeFilters({
           onChange={(event) =>
             onChange({
               ...filters,
-              category: event.target.value as RecipeFiltersState['category'],
+              category: event.target.value as RecipeFiltersState["category"],
             })
           }
         >
@@ -57,8 +51,8 @@ export function RecipeFilters({
           onChange={(event) =>
             onChange({
               ...filters,
-              difficulty:
-                event.target.value as RecipeFiltersState['difficulty'],
+              difficulty: event.target
+                .value as RecipeFiltersState["difficulty"],
             })
           }
         >
@@ -79,7 +73,7 @@ export function RecipeFilters({
           onChange={(event) =>
             onChange({
               ...filters,
-              used: event.target.value as RecipeFiltersState['used'],
+              used: event.target.value as RecipeFiltersState["used"],
             })
           }
         >
@@ -93,16 +87,16 @@ export function RecipeFilters({
         type="button"
         onClick={() =>
           onChange({
-            search: '',
-            category: 'Alle',
-            needleSize: 'Alle',
-            difficulty: 'Alle',
-            used: 'Alle',
+            search: "",
+            category: "Alle",
+            needleSize: "Alle",
+            difficulty: "Alle",
+            used: "Alle",
           })
         }
       >
         Nullstill filtre
       </button>
     </section>
-  )
+  );
 }

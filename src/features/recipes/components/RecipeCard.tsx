@@ -1,20 +1,30 @@
 import type { Recipe } from "../recipeTypes";
 
 interface RecipeCardProps {
-  recipe: Recipe
+  recipe: Recipe;
+  onOpenPdf: (pdfId: string) => void;
 }
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
+export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
   return (
     <article>
-      <h2>{recipe.title}</h2>
+      <h3>{recipe.title}</h3>
 
       <p>Kategori: {recipe.category}</p>
-      <p>Vanskelighetsgrad: {recipe.difficulty}</p>
-      <p>Pinestørrelser: {recipe.needleSizes.join(', ')}</p>
-      <p>{recipe.used ? 'Brukt' : 'Ikke brukt'}</p>
 
-      {recipe.notes && <p>{recipe.notes}</p>}
+      <p>Pinestørrelse: {recipe.needleSizes.join(", ")}</p>
+
+      <p>Vanskelighetsgrad: {recipe.difficulty}</p>
+
+      <p>{recipe.used ? "Du har brukt oppskriften" : "Ikke brukt ennå"}</p>
+
+      {recipe.notes && <p>Notater: {recipe.notes}</p>}
+
+      {recipe.pdfId && (
+        <button type="button" onClick={() => onOpenPdf(recipe.pdfId!)}>
+          Åpne PDF
+        </button>
+      )}
     </article>
-  )
+  );
 }

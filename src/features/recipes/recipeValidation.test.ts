@@ -1,49 +1,44 @@
-import { describe, expect, it } from 'vitest'
-import {
-  validateRecipeForm,
-  type RecipeFormData,
-} from './recipeValidation'
+import { describe, expect, it } from "vitest";
+import { validateRecipeForm, type RecipeFormData } from "./recipeValidation";
 
 const validForm: RecipeFormData = {
-  title: 'Sunday Sweater',
-  category: 'Genser',
-  needleSizes: '4, 4.5',
-  difficulty: 'Middels',
+  title: "Sunday Sweater",
+  category: "Genser",
+  needleSizes: "4, 4.5",
+  difficulty: "Middels",
   used: false,
-  notes: '',
-}
+  notes: "",
+};
 
-describe('validateRecipeForm', () => {
-  it('returns no errors for valid data', () => {
-    expect(validateRecipeForm(validForm)).toEqual({})
-  })
+describe("validateRecipeForm", () => {
+  it("returns no errors for valid data", () => {
+    expect(validateRecipeForm(validForm)).toEqual({});
+  });
 
-  it('requires a title', () => {
+  it("requires a title", () => {
     const result = validateRecipeForm({
       ...validForm,
-      title: '',
-    })
+      title: "",
+    });
 
-    expect(result.title).toBe('Navn er påkrevd.')
-  })
+    expect(result.title).toBe("Navn er påkrevd.");
+  });
 
-  it('requires a category', () => {
+  it("requires a category", () => {
     const result = validateRecipeForm({
       ...validForm,
-      category: '',
-    })
+      category: "",
+    });
 
-    expect(result.category).toBe('Velg en kategori.')
-  })
+    expect(result.category).toBe("Velg en kategori.");
+  });
 
-  it('requires needle sizes', () => {
+  it("requires needle sizes", () => {
     const result = validateRecipeForm({
       ...validForm,
-      needleSizes: '',
-    })
+      needleSizes: "",
+    });
 
-    expect(result.needleSizes).toBe(
-      'Skriv inn minst én pinnestørrelse.',
-    )
-  })
-})
+    expect(result.needleSizes).toBe("Skriv inn minst én pinnestørrelse.");
+  });
+});
