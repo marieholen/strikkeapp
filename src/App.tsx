@@ -1,16 +1,28 @@
 import { useState } from "react";
 
 import { RecipeList } from "./features/recipes/components/RecipeList";
+
 import { RecipeFilters } from "./features/recipes/components/RecipeFilters";
+
 import { RecipeForm } from "./features/recipes/components/RecipeForm";
 
+import { ProjectForm } from "./features/projects/components/ProjectForm";
+
+import { ProjectList } from "./features/projects/components/ProjectList";
+
 import type { Recipe } from "./features/recipes/recipeTypes";
+
 import type { RecipeFilters as RecipeFiltersState } from "./features/recipes/recipeFilters";
 
 import { filterRecipes } from "./features/recipes/recipeFilters";
+
 import { getRecipes, addRecipe } from "./features/recipes/recipeService";
 
 import { savePdf, getPdf } from "./features/recipes/pdfStorage";
+
+import { getProjects, addProject } from "./features/projects/projectService";
+
+import type { Project } from "./features/projects/projectTypes";
 
 const initialFilters: RecipeFiltersState = {
   search: "",
@@ -22,6 +34,8 @@ const initialFilters: RecipeFiltersState = {
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>(getRecipes);
+
+  const [projects, setProjects] = useState<Project[]>(getProjects);
 
   const [filters, setFilters] = useState<RecipeFiltersState>(initialFilters);
 
@@ -50,7 +64,6 @@ function App() {
   async function handleOpenPdf(pdfId: string) {
     try {
       const blob = await getPdf(pdfId);
-
       const url = URL.createObjectURL(blob);
 
       window.open(url, "_blank");
@@ -61,6 +74,11 @@ function App() {
     } catch {
       alert("Kunne ikke åpne PDF-filen.");
     }
+  }
+
+  function handleCreateProject(project: Project) {
+    addProject(project);
+    setProjects(getProjects());
   }
 
   return (
@@ -74,6 +92,10 @@ function App() {
       <RecipeFilters filters={filters} onChange={setFilters} />
 
       <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
+
+      <ProjectForm recipes={recipes} onCreate={handleCreateProject} />
+
+      <ProjectList projects={projects} recipes={recipes} />
     </main>
   );
 }

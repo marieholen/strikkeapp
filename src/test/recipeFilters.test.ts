@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { filterRecipes, type RecipeFilters } from "./recipeFilters";
-import type { Recipe } from "./recipeTypes";
+import {
+  filterRecipes,
+  type RecipeFilters,
+} from "../features/recipes/recipeFilters";
+
+import type { Recipe } from "../features/recipes/recipeTypes";
 
 const recipes: Recipe[] = [
   {
