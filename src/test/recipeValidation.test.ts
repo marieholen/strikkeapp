@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { validateRecipeForm, type RecipeFormData } from "./recipeValidation";
+import {
+  validateRecipeForm,
+  type RecipeFormData,
+} from "../features/recipes/recipeValidation";
 
 const validForm: RecipeFormData = {
   title: "Sunday Sweater",

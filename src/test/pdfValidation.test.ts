@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { validatePdfFile } from "./pdfValidation";
+import { validatePdfFile } from "../features/recipes/pdfValidation";
 
 describe("validatePdfFile", () => {
   it("accepts PDF files", () => {
