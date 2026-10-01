@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Strikkeapp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkeprosjekter.
 
-Currently, two official plugins are available:
+## Funksjoner
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Opprette og administrere strikkeoppskrifter
+- Søke og filtrere oppskrifter
+- Laste opp og åpne PDF-oppskrifter
+- Opprette og følge opp strikkeprosjekter
+- Registrere status og fremgang
+- Lagre data lokalt i nettleseren
 
-## React Compiler
+## Teknologi
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- Vitest
+- ESLint
+- IndexedDB
+- LocalStorage
 
-## Expanding the ESLint configuration
+## Struktur
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Prosjektet er organisert etter funksjonalitet:
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```text
+src/
+├── features/
+│   ├── recipes/
+│   └── projects/
+├── test/
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Forretningslogikk og validering er separert fra UI-komponentene.
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+### Lagring
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+Appen er bygget med en **local-first-arkitektur**:
+
+- Oppskrifter og prosjekter → `localStorage`
+- PDF-filer → `IndexedDB`
+- Ingen backend eller ekstern database
+
+## Kom i gang
+
+Installer avhengigheter:
+
+```bash
+npm install
 ```
+
+Start utviklingsserveren:
+
+```bash
+npm run dev
+```
+
+Kjør tester:
+
+```bash
+npm test
+```
+
+Kjør lint:
+
+```bash
+npm run lint
+```
+
+Bygg for produksjon:
+
+```bash
+npm run build
+```
+
+## Status
+
+Kjernefunksjonaliteten for oppskrifter og prosjekter er implementert.
+
+Appen støtter blant annet opprettelse, filtrering, PDF-lagring og oppfølging av strikkeprosjekter.
+
+## Videre utvikling
+
+- Redigere og slette oppskrifter og prosjekter
+- Organisere garn og pinner man har
+- Mer detaljert prosjektoppfølging
+- Forbedret responsivt design
+- Flere automatiserte tester
+- Mulighet for synkronisering i skyen
