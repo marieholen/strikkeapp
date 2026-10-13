@@ -99,3 +99,7 @@ Appen støtter blant annet opprettelse, filtrering, PDF-lagring og oppfølging a
 - Forbedret responsivt design
 - Flere automatiserte tester
 - Mulighet for synkronisering i skyen
+
+## Documentation
+
+See the [contributing document](CONTRIBUTING.md) for the development workflow and language policy.
