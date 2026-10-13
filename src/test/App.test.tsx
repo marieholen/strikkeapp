@@ -18,3 +18,5 @@ describe("App", () => {
     expect(screen.getByLabelText("Pinnestørrelse")).toBeInTheDocument();
   });
 });
+
+
