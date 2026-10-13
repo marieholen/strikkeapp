@@ -1,5 +1,7 @@
 # Strikkeapp
 
+[![CI](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml/badge.svg)](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml)
+
 En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkeprosjekter.
 
 ## Funksjoner
