@@ -6,6 +6,7 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
+  const { pdfId } = recipe;
   return (
     <article>
       <h3>{recipe.title}</h3>
@@ -20,8 +21,8 @@ export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
 
       {recipe.notes && <p>Notater: {recipe.notes}</p>}
 
-      {recipe.pdfId && (
-        <button type="button" onClick={() => onOpenPdf(recipe.pdfId!)}>
+      {pdfId && (
+        <button type="button" onClick={() => onOpenPdf(pdfId)}>
           Åpne PDF
         </button>
       )}
