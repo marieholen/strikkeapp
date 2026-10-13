@@ -12,7 +12,7 @@ En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkepro
 - Lagre data lokalt i nettleseren
 
 ## Design
-
+   
 The application design and prototype are created in Figma.
 
 [View the Figma design](https://www.figma.com/design/jytX4we6iirfAwWoAJ3mnB/Strikkeapp?node-id=2-32345&t=TFWe4IQ2uhQbtJW9-1)
