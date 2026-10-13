@@ -32,8 +32,19 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Test
-        run: npm test
+      - name: Test with coverage
+        shell: bash
+        run: npm run test:coverage | tee coverage-summary.txt
+
+      - name: Publish coverage summary
+        if: always()
+        run: |
+          {
+            echo "### Test coverage"
+            echo '```text'
+            cat coverage-summary.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build
         run: npm run build
