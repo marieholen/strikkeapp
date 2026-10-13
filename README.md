@@ -103,3 +103,7 @@ Appen støtter blant annet opprettelse, filtrering, PDF-lagring og oppfølging a
 ## Documentation
 
 See the [contributing document](CONTRIBUTING.md) for the development workflow and language policy.
+
+## AI usage
+
+See the [AI usage](docs/ai-usage.md) for how AI assistance is used and a log of notable use.
