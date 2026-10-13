@@ -85,7 +85,7 @@ function App() {
     <main>
       <h1>Strikkeapp</h1>
 
-      <p>Din strikkeorganisator!!</p>
+      <p>Din strikkeorganisator</p>
 
       <RecipeForm onCreate={handleCreateRecipe} />
 
