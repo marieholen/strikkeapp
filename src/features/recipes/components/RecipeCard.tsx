@@ -12,7 +12,7 @@ export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
 
       <p>Kategori: {recipe.category}</p>
 
-      <p>Pinestørrelse: {recipe.needleSizes.join(", ")}</p>
+      <p>Pinnestørrelse: {recipe.needleSizes.join(", ")}</p>
 
       <p>Vanskelighetsgrad: {recipe.difficulty}</p>
 

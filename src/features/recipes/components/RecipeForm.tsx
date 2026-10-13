@@ -117,7 +117,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
 
       <div>
         <label>
-          Pinestørrelse
+          Pinnestørrelse
           <input
             type="text"
             placeholder="For eksempel 3.5, 4"
