@@ -1,10 +1,10 @@
 export const recipeCategories = [
   "Genser",
-  "Jakke",
-  "Lue",
+  "Cardigan",
   "Sokker",
+  "Lue",
   "Votter",
-  "Skjerf",
+  "Tilbehør",
   "Annet",
 ] as const;
 
