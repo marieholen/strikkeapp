@@ -30,10 +30,10 @@ This project is a learning and portfolio project. AI assistance (Claude) is used
 
 ## Log
 
-| Date       | Issue / PR | AI helped with      | Author's contribution              |
-| ---------- | ---------- | ------------------- | ---------------------------------- |
-| 2026-10-12 | Templates  | suggested templates | modified them to suit my own needs |
-| 2026-10-12 | Issue backlog                  | Proposing an issue breakdown, order and dependencies                                                                   | Reviewed and edited the issues, decided scope and priorities, created them on GitHub                                   |
-| 2026-10-13 | Workflow and AI docs (#24-#25) | Drafting the git workflow, issue guidelines, language policy and AI usage documents                                    | Reviewed the content and adapted it to how I actually work                                                             |
-| 2026-10-13 | Recipe categories (#26)        | Suggesting the fix. It also suggested a legacy-value migration that was not needed                                     | Decided to drop the migration because only test data existed, removed the commits with an interactive rebase    |
-| 2026-10-13 | CI and tooling (#28)           | CI steps, coverage setup and Dependabot configuration                                                                  | Found that `eslint-plugin-jsx-a11y` does not support ESLint 10, refused `--force`, and moved that task to the ally issue |
+| Date       | Issue / PR                     | AI helped with                                                                      | Author's contribution                                                                                                    |
+| ---------- | ------------------------------ | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| 2026-10-12 | Templates                      | suggested templates                                                                 | modified them to suit my own needs                                                                                       |
+| 2026-10-12 | Issue backlog                  | Proposing an issue breakdown, order and dependencies                                | Reviewed and edited the issues, decided scope and priorities, created them on GitHub                                     |
+| 2026-10-13 | Workflow and AI docs (#24-#25) | Drafting the git workflow, issue guidelines, language policy and AI usage documents | Reviewed the content and adapted it to how I actually work                                                               |
+| 2026-10-13 | Recipe categories (#26)        | Suggesting the fix. It also suggested a legacy-value migration that was not needed  | Decided to drop the migration because only test data existed, removed the commits with an interactive rebase             |
+| 2026-10-13 | CI and tooling (#28)           | CI steps, coverage setup and Dependabot configuration                               | Found that `eslint-plugin-jsx-a11y` does not support ESLint 10, refused `--force`, and moved that task to the ally issue |
