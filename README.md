@@ -14,6 +14,7 @@ En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkepro
 - Lagre data lokalt i nettleseren
 
 ## Schreenshots
+
 The app is under development. The screenshot shows the recipe library and the form for adding recipes.
 
 ![Recipe library and new recipe form](docs/screenshots/strikkeapp1.png)
