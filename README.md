@@ -13,6 +13,13 @@ En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkepro
 - Registrere status og fremgang
 - Lagre data lokalt i nettleseren
 
+## Live demo
+
+[Try Strikkeapp](https://marieholen.github.io/strikkeapp/)
+
+Data and uploaded PDFs are stored locally in your browser.
+They are not uploaded to a server or shared with other visitors.
+
 ## Schreenshots
 
 The app is under development. The screenshot shows the recipe library and the form for adding recipes.
