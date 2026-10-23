@@ -2,16 +2,9 @@
 
 [![CI](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml/badge.svg)](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml)
 
-En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkeprosjekter.
-
-## Funksjoner
-
-- Opprette og administrere strikkeoppskrifter
-- Søke og filtrere oppskrifter
-- Laste opp og åpne PDF-oppskrifter
-- Opprette og følge opp strikkeprosjekter
-- Registrere status og fremgang
-- Lagre data lokalt i nettleseren
+A personal knitting organizer built with React and TypeScript.
+I develop this project independently to practise frontend development,
+testing and browser-based storage.
 
 ## Live demo
 
@@ -20,22 +13,31 @@ En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkepro
 Data and uploaded PDFs are stored locally in your browser.
 They are not uploaded to a server or shared with other visitors.
 
-## Schreenshots
+## Features
 
-The app is under development. The screenshot shows the recipe library and the form for adding recipes.
+- Create and manage knitting patterns
+- Search and filter patterns
+- Upload and open PDF patterns
+- Create and track knitting projects
+- Record project status and progress
+- Store data locally in the browser
+
+## Screenshots
+
+The app is under development. The screenshots show the recipe library,
+the form for adding recipes and the new project form.
 
 ![Recipe library and new recipe form](docs/screenshots/strikkeapp1.png)
 ![New project form](docs/screenshots/strikkeapp2.png)
 
 ## Design
 
-The planned design and prototype are created in Figma. The current interface is an initial version that will be developed further towards this design.
+The planned design and prototype are created in Figma. The current interface
+is an initial version that will be developed further towards this design.
 
 [View the Figma design](https://www.figma.com/design/jytX4we6iirfAwWoAJ3mnB/Strikkeapp)
 
-<!-- ![Application design](docs/screenshots/design.png) -->
-
-## Teknologi
+## Technology
 
 - React
 - TypeScript
@@ -43,11 +45,11 @@ The planned design and prototype are created in Figma. The current interface is 
 - Vitest
 - ESLint
 - IndexedDB
-- LocalStorage
+- localStorage
 
-## Struktur
+## Structure
 
-Prosjektet er organisert etter funksjonalitet:
+The project is organized by feature:
 
 ```text
 src/
@@ -59,43 +61,43 @@ src/
 └── main.tsx
 ```
 
-Forretningslogikk og validering er separert fra UI-komponentene.
+Business logic and validation are separated from UI components.
 
-### Lagring
+### Storage
 
-Appen er bygget med en **local-first-arkitektur**:
+The app uses a **local-first architecture**:
 
-- Oppskrifter og prosjekter → `localStorage`
-- PDF-filer → `IndexedDB`
-- Ingen backend eller ekstern database
+- Patterns and projects → `localStorage`
+- PDF files → `IndexedDB`
+- No backend or external database
 
-## Kom i gang
+## Getting started
 
-Installer avhengigheter:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start utviklingsserveren:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Kjør tester:
+Run tests:
 
 ```bash
 npm test
 ```
 
-Kjør lint:
+Run lint checks:
 
 ```bash
 npm run lint
 ```
 
-Bygg for produksjon:
+Build for production:
 
 ```bash
 npm run build
@@ -103,23 +105,26 @@ npm run build
 
 ## Status
 
-Kjernefunksjonaliteten for oppskrifter og prosjekter er implementert.
+Core functionality for patterns and projects is implemented.
 
-Appen støtter blant annet opprettelse, filtrering, PDF-lagring og oppfølging av strikkeprosjekter.
+The app supports creating patterns and projects, filtering patterns,
+storing PDFs and tracking knitting projects.
 
-## Videre utvikling
+## Future development
 
-- Redigere og slette oppskrifter og prosjekter
-- Organisere garn og pinner man har
-- Mer detaljert prosjektoppfølging
-- Forbedret responsivt design
-- Flere automatiserte tester
-- Mulighet for synkronisering i skyen
+- Edit and delete patterns and projects
+- Manage yarn and needle inventory
+- More detailed project tracking
+- Further improvements to responsive design
+- More automated tests
+- Optional cloud synchronization
 
 ## Documentation
 
-See the [contributing document](CONTRIBUTING.md) for the development workflow and language policy.
+See the [contribution guidelines](CONTRIBUTING.md) for the development
+workflow and language policy.
 
 ## AI usage
 
-See the [AI usage](docs/ai-usage.md) for how AI assistance is used and a log of notable use.
+See the [AI usage documentation](docs/ai-usage.md) for details on how
+AI assistance is used and a log of notable use.
