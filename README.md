@@ -13,11 +13,18 @@ En lokal strikkeorganisator for å holde oversikt over oppskrifter og strikkepro
 - Registrere status og fremgang
 - Lagre data lokalt i nettleseren
 
+## Schreenshots
+
+The app is under development. The screenshot shows the recipe library and the form for adding recipes.
+
+![Recipe library and new recipe form](docs/screenshots/strikkeapp1.png)
+![New project form](docs/screenshots/strikkeapp2.png)
+
 ## Design
 
-The application design and prototype are created in Figma.
+The planned design and prototype are created in Figma. The current interface is an initial version that will be developed further towards this design.
 
-[View the Figma design](https://www.figma.com/design/jytX4we6iirfAwWoAJ3mnB/Strikkeapp?node-id=2-32345&t=TFWe4IQ2uhQbtJW9-1)
+[View the Figma design](https://www.figma.com/design/jytX4we6iirfAwWoAJ3mnB/Strikkeapp)
 
 <!-- ![Application design](docs/screenshots/design.png) -->
 
