@@ -1,7 +1,5 @@
 # Strikkeapp
 
-[![CI](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml/badge.svg)](https://github.com/marieholen/strikkeapp/actions/workflows/ci.yml)
-
 A personal knitting organizer built with React and TypeScript.
 I develop this project independently to practise frontend development,
 testing and browser-based storage.
