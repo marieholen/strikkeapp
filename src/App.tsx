@@ -1,28 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { RecipeList } from "./features/recipes/components/RecipeList";
-
 import { RecipeFilters } from "./features/recipes/components/RecipeFilters";
-
 import { RecipeForm } from "./features/recipes/components/RecipeForm";
-
 import { ProjectForm } from "./features/projects/components/ProjectForm";
-
 import { ProjectList } from "./features/projects/components/ProjectList";
 
 import type { Recipe } from "./features/recipes/recipeTypes";
-
 import type { RecipeFilters as RecipeFiltersState } from "./features/recipes/recipeFilters";
+import type { Project } from "./features/projects/projectTypes";
 
 import { filterRecipes } from "./features/recipes/recipeFilters";
-
 import { getRecipes, addRecipe } from "./features/recipes/recipeService";
-
 import { savePdf, getPdf } from "./features/recipes/pdfStorage";
-
 import { getProjects, addProject } from "./features/projects/projectService";
-
-import type { Project } from "./features/projects/projectTypes";
 
 const initialFilters: RecipeFiltersState = {
   search: "",
@@ -32,12 +23,37 @@ const initialFilters: RecipeFiltersState = {
   used: "Alle",
 };
 
+function getCurrentPage() {
+  const hash = window.location.hash;
+
+  if (hash === "" || hash === "#/" || hash === "#/recipes") {
+    return "recipes";
+  }
+
+  if (hash === "#/projects") {
+    return "projects";
+  }
+
+  return "not-found";
+}
+
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>(getRecipes);
-
   const [projects, setProjects] = useState<Project[]>(getProjects);
-
   const [filters, setFilters] = useState<RecipeFiltersState>(initialFilters);
+  const [currentPage, setCurrentPage] = useState(getCurrentPage);
+
+  useEffect(() => {
+    function handleHashChange() {
+      setCurrentPage(getCurrentPage());
+    }
+
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   const filteredRecipes = filterRecipes(recipes, filters);
 
@@ -100,15 +116,56 @@ function App() {
 
       <p>Din strikkeorganisator</p>
 
-      <RecipeForm onCreate={handleCreateRecipe} />
+      <nav aria-label="Hovedmeny" className="main-nav">
+        <a
+          href="#/recipes"
+          aria-current={currentPage === "recipes" ? "page" : undefined}
+        >
+          Oppskrifter
+        </a>
 
-      <RecipeFilters filters={filters} onChange={setFilters} />
+        <a
+          href="#/projects"
+          aria-current={currentPage === "projects" ? "page" : undefined}
+        >
+          Prosjekter
+        </a>
+      </nav>
 
-      <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
+      {currentPage === "recipes" && (
+        <>
+          <p>
+            Her kan du samle oppskriftene dine. En oppskrift kan brukes i flere
+            prosjekter.
+          </p>
 
-      <ProjectForm recipes={recipes} onCreate={handleCreateProject} />
+          <RecipeForm onCreate={handleCreateRecipe} />
 
-      <ProjectList projects={projects} recipes={recipes} />
+          <RecipeFilters filters={filters} onChange={setFilters} />
+
+          <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
+        </>
+      )}
+
+      {currentPage === "projects" && (
+        <>
+          <p>
+            Et prosjekt er noe du strikker med utgangspunkt i en lagret
+            oppskrift.
+          </p>
+
+          <ProjectForm recipes={recipes} onCreate={handleCreateProject} />
+
+          <ProjectList projects={projects} recipes={recipes} />
+        </>
+      )}
+
+      {currentPage === "not-found" && (
+        <section>
+          <h2>Siden finnes ikke</h2>
+          <p>Bruk menyen for å gå til oppskrifter eller prosjekter.</p>
+        </section>
+      )}
     </main>
   );
 }
