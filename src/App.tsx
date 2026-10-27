@@ -62,16 +62,29 @@ function App() {
   }
 
   async function handleOpenPdf(pdfId: string) {
+    const pdfWindow = window.open("", "_blank");
+
+    if (!pdfWindow) {
+      alert("Kunne ikke åpne PDF-filen. Tillat popup-vinduer og prøv igjen.");
+      return;
+    }
+
+    pdfWindow.opener = null;
+    let url: string | undefined;
+
     try {
       const blob = await getPdf(pdfId);
-      const url = URL.createObjectURL(blob);
+      url = URL.createObjectURL(blob);
 
-      window.open(url, "_blank");
+      pdfWindow.location.href = url;
 
+      const pdfUrl = url;
       setTimeout(() => {
-        URL.revokeObjectURL(url);
+        URL.revokeObjectURL(pdfUrl);
       }, 60_000);
     } catch {
+      if (url) URL.revokeObjectURL(url);
+      pdfWindow.close();
       alert("Kunne ikke åpne PDF-filen.");
     }
   }
