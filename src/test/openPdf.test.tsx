@@ -30,7 +30,7 @@ describe("opening a saved PDF", () => {
     vi.stubGlobal("alert", vi.fn());
     vi.stubGlobal("URL", {
       createObjectURL: vi.fn(() => "blob:test"),
-    revokeObjectURL: vi.fn(),
+      revokeObjectURL: vi.fn(),
     });
   });
 
