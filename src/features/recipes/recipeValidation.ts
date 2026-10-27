@@ -18,11 +18,11 @@ export function validateRecipeForm(data: RecipeFormData): RecipeFormErrors {
   const errors: RecipeFormErrors = {};
 
   if (!data.title.trim()) {
-    errors.title = "Navn er påkrevd.";
+    errors.title = "Navn på oppskrift er påkrevd.";
   }
 
   if (!data.category) {
-    errors.category = "Velg en kategori.";
+    errors.category = "Velg en type oppskrift.";
   }
 
   if (!data.needleSizes.trim()) {

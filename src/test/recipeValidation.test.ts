@@ -24,7 +24,7 @@ describe("validateRecipeForm", () => {
       title: "",
     });
 
-    expect(result.title).toBe("Navn er påkrevd.");
+    expect(result.title).toBe("Navn på oppskrift er påkrevd.");
   });
 
   it("requires a category", () => {
@@ -33,7 +33,7 @@ describe("validateRecipeForm", () => {
       category: "",
     });
 
-    expect(result.category).toBe("Velg en kategori.");
+    expect(result.category).toBe("Velg en type oppskrift.");
   });
 
   it("requires needle sizes", () => {

@@ -74,7 +74,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
 
       <div>
         <label>
-          Navn
+          Navn på oppskrift
           <input
             type="text"
             value={form.title}
@@ -102,7 +102,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
               });
             }}
           >
-            <option value="">Velg kategori</option>
+            <option value="">Velg type oppskrift</option>
 
             {recipeCategories.map((category) => (
               <option key={category} value={category}>
