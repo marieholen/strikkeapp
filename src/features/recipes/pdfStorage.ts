@@ -25,6 +25,7 @@ function openDatabase(): Promise<IDBDatabase> {
 }
 
 export async function savePdf(file: File): Promise<string> {
+  const bytes = await file.arrayBuffer();
   const database = await openDatabase();
 
   const id = crypto.randomUUID();
@@ -33,7 +34,7 @@ export async function savePdf(file: File): Promise<string> {
     const transaction = database.transaction(STORE_NAME, "readwrite");
     const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.put(file, id);
+    const request = store.put(bytes, id);
 
     request.onsuccess = () => {
       resolve(id);
@@ -64,12 +65,19 @@ export async function getPdf(id: string): Promise<Blob> {
     const request = store.get(id);
 
     request.onsuccess = () => {
-      if (!request.result) {
+      const result = request.result;
+
+      if (!result) {
         reject(new Error("PDF-filen ble ikke funnet."));
         return;
       }
 
-      resolve(request.result as Blob);
+      if (result instanceof ArrayBuffer) {
+        resolve(new Blob([result], { type: "application/pdf" }));
+        return;
+      }
+
+      resolve(result as Blob);
     };
 
     request.onerror = () => {

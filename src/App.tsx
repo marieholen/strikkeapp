@@ -57,7 +57,7 @@ function App() {
       addRecipe(recipeToSave);
       setRecipes(getRecipes());
     } catch {
-      alert("Kunne ikke lagre PDF-filen.");
+      alert("Kunne ikke lagre oppskriften.");
     }
   }
 
