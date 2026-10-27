@@ -38,12 +38,12 @@ p {
 
 h1 {
   margin-bottom: 4px;
+  color: #263c33;
   font-size: clamp(2rem, 5vw, 3rem);
   letter-spacing: -0.04em;
 }
 
 main > p {
-  margin-bottom: 32px;
   color: #59685e;
 }
 
@@ -60,23 +60,33 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 24px;
+  margin: 24px 0;
+  padding: 6px;
+  background: #eaece3;
+  border-radius: 12px;
 }
 
 .main-nav a {
-  padding: 10px 16px;
+  min-height: 44px;
+  padding: 10px 18px;
   color: #263c33;
-  background: #fff;
-  border: 1px solid #aebbb1;
   border-radius: 8px;
   font-weight: 600;
+  text-align: center;
   text-decoration: none;
+}
+
+.main-nav a:hover {
+  background: #dce2d7;
 }
 
 .main-nav a[aria-current="page"] {
   color: #fff;
   background: #38634b;
-  border-color: #38634b;
+}
+
+.main-nav a[aria-current="page"]:hover {
+  background: #294c39;
 }
 
 form {
@@ -88,7 +98,7 @@ form {
   background: #fff;
   border: 1px solid #dedfd5;
   border-radius: 16px;
-  box-shadow: 0 4px 18px rgb(38 60 51 / 4%);
+  box-shadow: 0 4px 18px rgb(38 60 51 / 6%);
 }
 
 form > h2,
@@ -129,6 +139,12 @@ textarea {
   background: #fff;
   border: 1px solid #aebbb1;
   border-radius: 8px;
+}
+
+input:not([type="checkbox"]):not([type="range"]):hover,
+select:hover,
+textarea:hover {
+  border-color: #789182;
 }
 
 textarea {
@@ -192,12 +208,17 @@ section[aria-label="Filtrer oppskrifter"] > button {
   border-color: #aebbb1;
 }
 
+section[aria-label="Filtrer oppskrifter"] > button:hover {
+  background: #f7f8f4;
+}
+
 article {
   margin-bottom: 16px;
   padding: 22px;
   background: #fff;
   border: 1px solid #dedfd5;
   border-radius: 12px;
+  box-shadow: 0 4px 18px rgb(38 60 51 / 4%);
 }
 
 article h3 {
@@ -227,6 +248,10 @@ section[aria-label="Prosjekter"] > section {
   main {
     width: min(100% - 24px, 960px);
     padding-top: 24px;
+  }
+
+  .main-nav a {
+    flex: 1;
   }
 
   form {
