@@ -56,6 +56,29 @@ h3 {
   font-size: 1.1rem;
 }
 
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.main-nav a {
+  padding: 10px 16px;
+  color: #263c33;
+  background: #fff;
+  border: 1px solid #aebbb1;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.main-nav a[aria-current="page"] {
+  color: #fff;
+  background: #38634b;
+  border-color: #38634b;
+}
+
 form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
