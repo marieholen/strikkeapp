@@ -175,6 +175,16 @@ form {
   border: 1px solid #e6ddd2;
   border-radius: 12px;
 }
+button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.save-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #8e3f58;
+}
+
 form > h2,
 form > button {
   grid-column: 1 / -1;

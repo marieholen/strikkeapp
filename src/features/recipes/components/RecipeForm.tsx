@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   recipeCategories,
@@ -17,7 +17,7 @@ import {
 import { validatePdfFile } from "../pdfValidation";
 
 interface RecipeFormProps {
-  onCreate: (recipe: Recipe, pdfFile?: File) => void;
+  onCreate: (recipe: Recipe, pdfFile?: File) => Promise<void>;
 }
 
 const initialForm: RecipeFormData = {
@@ -35,46 +35,73 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
   const [pdfFile, setPdfFile] = useState<File | undefined>();
   const [pdfError, setPdfError] = useState<string | null>(null);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const pdfInputRef = useRef<HTMLInputElement>(null);
+  const savingRef = useRef(false);
+
+  function clearPdf() {
+    setPdfFile(undefined);
+    setPdfError(null);
+    if (pdfInputRef.current) {
+      pdfInputRef.current.value = "";
+    }
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (savingRef.current) return;
+
+    setSaveError(null);
     const validationErrors = validateRecipeForm(form);
 
-    if (Object.keys(validationErrors).length > 0) {
+    if (Object.keys(validationErrors).length > 0 || pdfError) {
       setErrors(validationErrors);
       return;
     }
 
-    const recipe: Recipe = {
-      id: crypto.randomUUID(),
-      title: form.title.trim(),
-      category: form.category as RecipeCategory,
-      needleSizes: form.needleSizes
-        .split(",")
-        .map((size) => Number(size.trim()))
-        .filter((size) => !Number.isNaN(size)),
-      difficulty: form.difficulty as RecipeDifficulty,
-      used: form.used,
-      notes: form.notes.trim(),
-      createdAt: new Date().toISOString(),
-    };
-
-    onCreate(recipe, pdfFile);
-
-    setForm(initialForm);
     setErrors({});
-    setPdfFile(undefined);
-    setPdfError(null);
+    savingRef.current = true;
+    setIsSaving(true);
+
+    try {
+      const recipe: Recipe = {
+        id: crypto.randomUUID(),
+        title: form.title.trim(),
+        category: form.category as RecipeCategory,
+        needleSizes: form.needleSizes
+          .split(",")
+          .map((size) => Number(size.trim()))
+          .filter((size) => !Number.isNaN(size)),
+        difficulty: form.difficulty as RecipeDifficulty,
+        used: form.used,
+        notes: form.notes.trim(),
+        createdAt: new Date().toISOString(),
+      };
+
+      await onCreate(recipe, pdfFile);
+
+      setForm(initialForm);
+      setErrors({});
+      clearPdf();
+    } catch {
+      setSaveError("Kunne ikke lagre oppskriften. Prøv igjen.");
+    } finally {
+      savingRef.current = false;
+      setIsSaving(false);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-busy={isSaving}>
       <h2>Ny oppskrift</h2>
 
       <div>
         <label>
           Navn på oppskrift
           <input
+            disabled={isSaving}
             type="text"
             value={form.title}
             onChange={(event) =>
@@ -90,6 +117,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         <label>
           Type oppskrift
           <select
+            disabled={isSaving}
             value={form.category}
             onChange={(event) =>
               setForm({ ...form, category: event.target.value })
@@ -112,6 +140,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         <label>
           Pinnestørrelse
           <input
+            disabled={isSaving}
             type="text"
             placeholder="For eksempel 3.5, 4"
             value={form.needleSizes}
@@ -128,6 +157,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         <label>
           Vanskelighetsgrad
           <select
+            disabled={isSaving}
             value={form.difficulty}
             onChange={(event) =>
               setForm({ ...form, difficulty: event.target.value })
@@ -149,6 +179,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
       <div>
         <label>
           <input
+            disabled={isSaving}
             type="checkbox"
             checked={form.used}
             onChange={(event) =>
@@ -163,6 +194,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         <label>
           Notater
           <textarea
+            disabled={isSaving}
             value={form.notes}
             onChange={(event) =>
               setForm({ ...form, notes: event.target.value })
@@ -175,6 +207,8 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         <label>
           PDF-oppskrift
           <input
+            disabled={isSaving}
+            ref={pdfInputRef}
             type="file"
             accept="application/pdf"
             onChange={(event) => {
@@ -200,12 +234,31 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           />
         </label>
 
-        {pdfError && <p>{pdfError}</p>}
+        {pdfError && <p role="alert">{pdfError}</p>}
 
         {pdfFile && <p>Valgt fil: {pdfFile.name}</p>}
+
+        {(pdfFile || pdfError) && (
+          <button
+            type="button"
+            className="secondary-button"
+            disabled={isSaving}
+            onClick={clearPdf}
+          >
+            Fjern fil
+          </button>
+        )}
       </div>
 
-      <button type="submit">Lagre oppskrift</button>
+      {saveError && (
+        <p className="save-error" role="alert">
+          {saveError}
+        </p>
+      )}
+
+      <button type="submit" disabled={isSaving}>
+        {isSaving ? "Lagrer..." : "Lagre oppskrift"}
+      </button>
     </form>
   );
 }
