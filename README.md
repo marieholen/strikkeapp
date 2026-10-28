@@ -13,25 +13,78 @@ They are not uploaded to a server or shared with other visitors.
 
 ## Features
 
-- Create and manage knitting patterns
-- Search and filter patterns
-- Upload and open PDF patterns
-- Create and track knitting projects
-- Record project status and progress
-- Store data locally in the browser
+- Create knitting patterns with notes and an optional PDF
+- Search and filter saved patterns
+- Open saved PDFs in a new browser tab
+- Create projects linked to a saved pattern
+- Choose a status and progress when creating a project
+- View projects grouped by status
+- Store patterns, projects and PDFs locally
 
 ## Screenshots
 
-The app is under development. The screenshots show the recipe library,
-the form for adding recipes and the new project form.
+### Recipe library
 
-![Recipe library and new recipe form](docs/screenshots/strikkeapp1.png)
-![New project form](docs/screenshots/strikkeapp2.png)
+![Recipe library](docs/screenshots/recipe_library.png)
+
+### Projects
+
+![Projects](docs/screenshots/projects.png)
+
+<details>
+<summary>More screenshots</summary>
+
+### Filter bar
+
+![Filter bar](docs/screenshots/filter_bar.png)
+
+### New recipe form
+
+![New recipe form](docs/screenshots/new_recipe_form.png)
+
+### New project form
+
+![New project form](docs/screenshots/new_project_form.png)
+
+</details>
+
+## Using the app
+
+Use the navigation to switch between recipes and projects.
+The navigation appears in a sidebar on desktop and at the bottom on mobile.
+
+### Recipes
+
+The recipe library displays saved patterns as cards.
+
+Select **Legg til oppskrift** to open the form.
+Use **Lukk oppskriftsskjema** to close it.
+Closing and reopening the form keeps unsaved input.
+
+Use the search field to find patterns by name.
+Select **Filtrer** to show or hide the other filters.
+Selected filters remain active when the controls are hidden.
+Select **Nullstill filtre** to clear the search and filters.
+
+### Projects
+
+A project represents something you are knitting from a saved pattern.
+The same pattern can be used for several projects.
+
+Select **Nytt prosjekt** to open the project form.
+Projects are displayed in groups based on their status.
+
+Unsaved form input is kept when closing a form or switching between pages.
+It is not preserved after reloading or closing the app.
 
 ## Design
 
-The planned design and prototype are created in Figma. The current interface
-is an initial version that will be developed further towards this design.
+The recipe and project pages are based on the Figma design.
+The current version includes responsive navigation, recipe cards,
+project columns and forms that open when needed.
+
+Some screens and features in Figma are planned for later development.
+Recipe cards currently use colored placeholders instead of uploaded photos.
 
 [View the Figma design](https://www.figma.com/design/jytX4we6iirfAwWoAJ3mnB/Strikkeapp)
 
@@ -40,10 +93,13 @@ is an initial version that will be developed further towards this design.
 - React
 - TypeScript
 - Vite
-- Vitest
-- ESLint
+- Vitest and React Testing Library
+- ESLint and Prettier
 - IndexedDB
 - localStorage
+
+The interface uses Inter and DM Serif Display from Google Fonts.
+Local fallback fonts are used if they cannot be loaded.
 
 ## Structure
 
@@ -63,11 +119,14 @@ Business logic and validation are separated from UI components.
 
 ### Storage
 
-The app uses a **local-first architecture**:
+- Pattern and project data is stored in localStorage
+- PDF files are stored in IndexedDB
+- The app has no backend or external database
 
-- Patterns and projects → `localStorage`
-- PDF files → `IndexedDB`
-- No backend or external database
+Data belongs to the browser and device where it was created.
+Clearing browser data can remove saved content.
+Private browsing storage may be removed when the private session ends.
+The app does not currently provide backups or synchronization.
 
 ## Getting started
 
@@ -83,10 +142,18 @@ Start the development server:
 npm run dev
 ```
 
-Run tests:
+## Checks
+
+Run automated tests:
 
 ```bash
 npm test
+```
+
+Check TypeScript:
+
+```bash
+npm run typecheck
 ```
 
 Run lint checks:
@@ -95,27 +162,25 @@ Run lint checks:
 npm run lint
 ```
 
+Check formatting:
+
+```bash
+npm run format:check
+```
+
 Build for production:
 
 ```bash
 npm run build
 ```
 
-## Status
-
-Core functionality for patterns and projects is implemented.
-
-The app supports creating patterns and projects, filtering patterns,
-storing PDFs and tracking knitting projects.
-
 ## Future development
 
 - Edit and delete patterns and projects
+- Update project status and progress
+- Read and annotate PDFs inside the app
 - Manage yarn and needle inventory
-- More detailed project tracking
-- Further improvements to responsive design
-- More automated tests
-- Optional cloud synchronization
+- Add photos and more detailed project information
 
 ## Documentation
 
@@ -124,5 +189,5 @@ workflow and language policy.
 
 ## AI usage
 
-See the [AI usage documentation](docs/ai-usage.md) for details on how
-AI assistance is used and a log of notable use.
+See the [AI usage documentation](docs/ai-usage.md) for how
+AI assistance is used and reviewed in this project.

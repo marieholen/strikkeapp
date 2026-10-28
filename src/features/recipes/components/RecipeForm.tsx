@@ -32,7 +32,6 @@ const initialForm: RecipeFormData = {
 export function RecipeForm({ onCreate }: RecipeFormProps) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState<RecipeFormErrors>({});
-
   const [pdfFile, setPdfFile] = useState<File | undefined>();
   const [pdfError, setPdfError] = useState<string | null>(null);
 
@@ -78,12 +77,9 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           <input
             type="text"
             value={form.title}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                title: event.target.value,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, title: event.target.value })
+            }
           />
         </label>
 
@@ -92,15 +88,12 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
 
       <div>
         <label>
-          Kategori
+          Type oppskrift
           <select
             value={form.category}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                category: event.target.value,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, category: event.target.value })
+            }
           >
             <option value="">Velg type oppskrift</option>
 
@@ -122,12 +115,9 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
             type="text"
             placeholder="For eksempel 3.5, 4"
             value={form.needleSizes}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                needleSizes: event.target.value,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, needleSizes: event.target.value })
+            }
           />
         </label>
 
@@ -139,12 +129,9 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           Vanskelighetsgrad
           <select
             value={form.difficulty}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                difficulty: event.target.value,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, difficulty: event.target.value })
+            }
           >
             <option value="">Velg vanskelighetsgrad</option>
 
@@ -164,12 +151,9 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           <input
             type="checkbox"
             checked={form.used}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                used: event.target.checked,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, used: event.target.checked })
+            }
           />
           Har brukt oppskriften
         </label>
@@ -180,12 +164,9 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           Notater
           <textarea
             value={form.notes}
-            onChange={(event) => {
-              setForm({
-                ...form,
-                notes: event.target.value,
-              });
-            }}
+            onChange={(event) =>
+              setForm({ ...form, notes: event.target.value })
+            }
           />
         </label>
       </div>

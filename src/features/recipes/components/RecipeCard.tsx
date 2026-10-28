@@ -7,25 +7,43 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
   const { pdfId } = recipe;
+
   return (
-    <article>
-      <h3>{recipe.title}</h3>
+    <article className="recipe-card">
+      <div className="recipe-cover" aria-hidden="true">
+        <span>{recipe.category}</span>
+      </div>
 
-      <p>Kategori: {recipe.category}</p>
+      <div className="recipe-card-body">
+        <h3>{recipe.title}</h3>
 
-      <p>Pinnestørrelse: {recipe.needleSizes.join(", ")}</p>
+        <p className="card-meta">
+          {recipe.category} · {recipe.needleSizes.join(", ")} mm
+        </p>
 
-      <p>Vanskelighetsgrad: {recipe.difficulty}</p>
+        <p className="card-meta">{recipe.difficulty}</p>
 
-      <p>{recipe.used ? "Du har brukt oppskriften" : "Ikke brukt ennå"}</p>
+        <p className="card-meta">
+          {recipe.used ? "Strikket før" : "Ikke brukt ennå"}
+        </p>
 
-      {recipe.notes && <p>Notater: {recipe.notes}</p>}
+        {recipe.notes && (
+          <details className="card-notes">
+            <summary>Notater</summary>
+            <p>{recipe.notes}</p>
+          </details>
+        )}
 
-      {pdfId && (
-        <button type="button" onClick={() => onOpenPdf(pdfId)}>
-          Åpne PDF
-        </button>
-      )}
+        {pdfId && (
+          <button
+            className="secondary-button"
+            type="button"
+            onClick={() => onOpenPdf(pdfId)}
+          >
+            Åpne PDF
+          </button>
+        )}
+      </div>
     </article>
   );
 }

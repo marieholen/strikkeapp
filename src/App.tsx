@@ -5,11 +5,9 @@ import { RecipeFilters } from "./features/recipes/components/RecipeFilters";
 import { RecipeForm } from "./features/recipes/components/RecipeForm";
 import { ProjectForm } from "./features/projects/components/ProjectForm";
 import { ProjectList } from "./features/projects/components/ProjectList";
-
 import type { Recipe } from "./features/recipes/recipeTypes";
 import type { RecipeFilters as RecipeFiltersState } from "./features/recipes/recipeFilters";
 import type { Project } from "./features/projects/projectTypes";
-
 import { filterRecipes } from "./features/recipes/recipeFilters";
 import { getRecipes, addRecipe } from "./features/recipes/recipeService";
 import { savePdf, getPdf } from "./features/recipes/pdfStorage";
@@ -25,15 +23,8 @@ const initialFilters: RecipeFiltersState = {
 
 function getCurrentPage() {
   const hash = window.location.hash;
-
-  if (hash === "" || hash === "#/" || hash === "#/recipes") {
-    return "recipes";
-  }
-
-  if (hash === "#/projects") {
-    return "projects";
-  }
-
+  if (hash === "" || hash === "#/" || hash === "#/recipes") return "recipes";
+  if (hash === "#/projects") return "projects";
   return "not-found";
 }
 
@@ -42,17 +33,15 @@ function App() {
   const [projects, setProjects] = useState<Project[]>(getProjects);
   const [filters, setFilters] = useState<RecipeFiltersState>(initialFilters);
   const [currentPage, setCurrentPage] = useState(getCurrentPage);
+  const [recipeFormOpen, setRecipeFormOpen] = useState(false);
+  const [projectFormOpen, setProjectFormOpen] = useState(false);
 
   useEffect(() => {
     function handleHashChange() {
       setCurrentPage(getCurrentPage());
     }
-
     window.addEventListener("hashchange", handleHashChange);
-
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const filteredRecipes = filterRecipes(recipes, filters);
@@ -60,16 +49,10 @@ function App() {
   async function handleCreateRecipe(recipe: Recipe, pdfFile?: File) {
     try {
       let recipeToSave = recipe;
-
       if (pdfFile) {
         const pdfId = await savePdf(pdfFile);
-
-        recipeToSave = {
-          ...recipe,
-          pdfId,
-        };
+        recipeToSave = { ...recipe, pdfId };
       }
-
       addRecipe(recipeToSave);
       setRecipes(getRecipes());
     } catch {
@@ -79,25 +62,18 @@ function App() {
 
   async function handleOpenPdf(pdfId: string) {
     const pdfWindow = window.open("", "_blank");
-
     if (!pdfWindow) {
       alert("Kunne ikke åpne PDF-filen. Tillat popup-vinduer og prøv igjen.");
       return;
     }
-
     pdfWindow.opener = null;
     let url: string | undefined;
-
     try {
       const blob = await getPdf(pdfId);
       url = URL.createObjectURL(blob);
-
       pdfWindow.location.href = url;
-
       const pdfUrl = url;
-      setTimeout(() => {
-        URL.revokeObjectURL(pdfUrl);
-      }, 60_000);
+      setTimeout(() => URL.revokeObjectURL(pdfUrl), 60_000);
     } catch {
       if (url) URL.revokeObjectURL(url);
       pdfWindow.close();
@@ -111,62 +87,93 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>Strikkeapp</h1>
+    <div className="app-layout">
+      <aside className="sidebar">
+        <div className="brand">
+          <span className="brand-mark" aria-hidden="true">
+            M
+          </span>
+          <span>Strikkeapp</span>
+        </div>
+        <nav aria-label="Hovedmeny" className="main-nav">
+          <a
+            href="#/recipes"
+            aria-current={currentPage === "recipes" ? "page" : undefined}
+          >
+            Oppskrifter
+          </a>
+          <a
+            href="#/projects"
+            aria-current={currentPage === "projects" ? "page" : undefined}
+          >
+            Prosjekter
+          </a>
+        </nav>
+      </aside>
 
-      <p>Din strikkeorganisator</p>
+      <main>
+        <section hidden={currentPage !== "recipes"}>
+          <header className="page-header">
+            <div>
+              <h1>Oppskriftsbibliotek</h1>
+              <p className="page-description">
+                {recipes.length} oppskrifter i biblioteket
+              </p>
+            </div>
+            <button
+              type="button"
+              aria-expanded={recipeFormOpen}
+              aria-controls="recipe-form-panel"
+              onClick={() => setRecipeFormOpen(!recipeFormOpen)}
+            >
+              {recipeFormOpen ? "Lukk oppskriftsskjema" : "Legg til oppskrift"}
+            </button>
+          </header>
+          <div id="recipe-form-panel" hidden={!recipeFormOpen}>
+            <RecipeForm onCreate={handleCreateRecipe} />
+          </div>
+          <div className="library-layout">
+            <RecipeFilters filters={filters} onChange={setFilters} />
+            <div className="library-results">
+              <p className="result-count">{filteredRecipes.length} treff</p>
+              <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
+            </div>
+          </div>
+        </section>
 
-      <nav aria-label="Hovedmeny" className="main-nav">
-        <a
-          href="#/recipes"
-          aria-current={currentPage === "recipes" ? "page" : undefined}
-        >
-          Oppskrifter
-        </a>
-
-        <a
-          href="#/projects"
-          aria-current={currentPage === "projects" ? "page" : undefined}
-        >
-          Prosjekter
-        </a>
-      </nav>
-
-      {currentPage === "recipes" && (
-        <>
-          <p>
-            Her kan du samle oppskriftene dine. En oppskrift kan brukes i flere
-            prosjekter.
-          </p>
-
-          <RecipeForm onCreate={handleCreateRecipe} />
-
-          <RecipeFilters filters={filters} onChange={setFilters} />
-
-          <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
-        </>
-      )}
-
-      {currentPage === "projects" && (
-        <>
-          <p>
+        <section hidden={currentPage !== "projects"}>
+          <header className="page-header">
+            <div>
+              <h1>Prosjekter</h1>
+              <p className="page-description">{projects.length} prosjekter</p>
+            </div>
+            <button
+              type="button"
+              aria-expanded={projectFormOpen}
+              aria-controls="project-form-panel"
+              onClick={() => setProjectFormOpen(!projectFormOpen)}
+            >
+              {projectFormOpen ? "Lukk prosjektskjema" : "Nytt prosjekt"}
+            </button>
+          </header>
+          <div id="project-form-panel" hidden={!projectFormOpen}>
+            <ProjectForm recipes={recipes} onCreate={handleCreateProject} />
+          </div>
+          <p className="page-description">
             Et prosjekt er noe du strikker med utgangspunkt i en lagret
             oppskrift.
           </p>
-
-          <ProjectForm recipes={recipes} onCreate={handleCreateProject} />
-
           <ProjectList projects={projects} recipes={recipes} />
-        </>
-      )}
-
-      {currentPage === "not-found" && (
-        <section>
-          <h2>Siden finnes ikke</h2>
-          <p>Bruk menyen for å gå til oppskrifter eller prosjekter.</p>
         </section>
-      )}
-    </main>
+
+        {currentPage === "not-found" && (
+          <section className="empty-state">
+            <h1>Siden finnes ikke</h1>
+            <p>Bruk menyen for å gå til oppskrifter eller prosjekter.</p>
+          </section>
+        )}
+      </main>
+    </div>
   );
 }
 
