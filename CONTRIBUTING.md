@@ -1,61 +1,113 @@
 # Contributing
 
-This document describes the development workflow, contribution guidelines, and conventions used in Strikkeapp.
+Strikkeapp is a personal learning project.
+This document describes the workflow and conventions used in the repository.
 
 ## Development workflow
 
-All changes should follow this workflow:
-
-1. Create or identify a GitHub issue describing the change.
+1. Create or identify an issue describing the change.
 2. Create a branch from the latest `main`.
 3. Implement the change in small, logical commits.
-4. Open a pull request linked to the issue using `Closes #<number>`.
-5. Ensure all checks pass and review the changes before merging.
+4. Add or update relevant tests and documentation.
+5. Open a pull request linked to the issue using `Closes #<number>`.
+6. Run the project checks and review the changes before merging.
 
-The `main` branch should remain in a working state. Delete feature branches after merging.
+Keep `main` in a working state and delete feature branches after merging.
 
 ## Issues
 
-Issues should be small, independently testable units of work that can be completed in a single pull request.
+Keep issues focused and manageable.
+Related changes can share an issue when they form one coherent improvement.
 
-Each issue should include:
+Use the repository's issue templates and include:
 
-- A clear description of the problem or proposed change.
-- Testable acceptance criteria.
-- Relevant implementation tasks, including tests and documentation.
-- Explicit dependencies on other issues, where applicable.
+- A short description of the change
+- The main tasks
+- Testable acceptance criteria
+- Dependencies on other issues when needed
 
-Split issues that cover unrelated functionality or are too large to review comfortably. Use the repository's issue templates and apply appropriate type, priority, and area labels.
+Use a suitable type label, such as `feature`, `bug`, `chore` or
+`documentation`. Add a priority label when useful.
+Area labels and milestones are optional.
 
 ## Branches and commits
 
-Use short-lived branches on each issue.
+Use a separate branch for each issue.
+Choose a branch name that describes the work, preferably including
+the issue number.
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
+Use this commit message format:
 
-`<type>(<optional-scope>): <description>`
+```text
+[<type>] <description>
+```
 
-## Pull requests and code quality
+Examples:
 
-Each pull request should address one issue and include any relevant tests and documentation.
+```text
+[feat] add recipe navigation
+[fix] handle failed PDF loading
+[test] cover recipe filtering
+[docs] update interface screenshots
+[chore] format recipe components
+```
+
+Keep commits focused and use short, descriptive messages.
+
+## Tests and documentation
+
+Include relevant tests and documentation in the same pull request
+as the change.
+
+Add or update tests when behavior changes.
+Update the README, screenshots or other affected documentation
+when needed.
+
+Not every change requires new tests or documentation.
+Explain briefly in the pull request when either is not applicable.
+
+Create separate issues for larger documentation improvements
+or missing test coverage discovered outside the current work.
+
+## Pull requests and checks
+
+Keep pull requests focused and use the repository's pull request template.
+Describe what changed and how it was tested.
 
 Before merging:
 
-- Review the diff for correctness and unnecessary changes.
-- Ensure the project's CI checks pass, including formatting, linting, type checking, tests, and build.
-- Confirm that the pull request description explains the changes and how they were tested.
+- Review the diff
+- Run the project checks
+- Check changed user flows in the browser
+- Check mobile layouts and keyboard access when relevant
+- Confirm that documentation describes the implemented behavior
 
-Use **Create a merge commit** to preserve the individual commits and pull request boundaries in the project history.
+Run these checks:
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run format:check
+npm run build
+```
+
+Use **Create a merge commit** to preserve the individual commits
+in the pull request.
 
 ## Language conventions
 
-Use Norwegian for all user-facing application text, including labels, validation messages, and domain values displayed in the UI.
+Use Norwegian for user-facing application text, including labels,
+validation messages and displayed domain values.
 
 Use English for:
 
-- Source code, identifiers, and code comments.
-- Tests and test names.
-- Documentation and README files.
-- GitHub issues, pull requests, and commit messages.
+- Source code, identifiers and code comments
+- Tests and test names
+- Documentation
+- Issues, pull requests and commit messages
 
-This convention keeps the application natural for Norwegian-users while maintaining an accessible and consistent development workflow.
+## AI assistance
+
+See the [AI usage documentation](docs/ai-usage.md) for how
+AI assistance is used and reviewed in this project.
