@@ -46,18 +46,19 @@ function App() {
 
   const filteredRecipes = filterRecipes(recipes, filters);
 
-  async function handleCreateRecipe(recipe: Recipe, pdfFile?: File) {
-    try {
-      let recipeToSave = recipe;
-      if (pdfFile) {
-        const pdfId = await savePdf(pdfFile);
-        recipeToSave = { ...recipe, pdfId };
-      }
-      addRecipe(recipeToSave);
-      setRecipes(getRecipes());
-    } catch {
-      alert("Kunne ikke lagre oppskriften.");
+  async function handleCreateRecipe(
+    recipe: Recipe,
+    pdfFile?: File,
+  ): Promise<void> {
+    let recipeToSave = recipe;
+
+    if (pdfFile) {
+      const pdfId = await savePdf(pdfFile);
+      recipeToSave = { ...recipe, pdfId };
     }
+
+    addRecipe(recipeToSave);
+    setRecipes((currentRecipes) => [...currentRecipes, recipeToSave]);
   }
 
   async function handleOpenPdf(pdfId: string) {

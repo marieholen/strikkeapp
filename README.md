@@ -61,6 +61,11 @@ Select **Legg til oppskrift** to open the form.
 Use **Lukk oppskriftsskjema** to close it.
 Closing and reopening the form keeps unsaved input.
 
+While saving, the recipe form is disabled and the button shows **Lagrer...**.
+The whole form, including the selected PDF, clears after successful saving.
+If saving fails, an error is shown and the input is kept for another attempt.
+An invalid PDF must be removed or replaced before saving.
+
 Use the search field to find patterns by name.
 Select **Filtrer** to show or hide the other filters.
 Selected filters remain active when the controls are hidden.
