@@ -92,6 +92,7 @@ describe("App", () => {
     const filters = within(
       screen.getByRole("region", { name: "Filtrer oppskrifter" }),
     );
+    fireEvent.click(filters.getByRole("button", { name: "Filtrer" }));
     fireEvent.change(
       filters.getByRole("combobox", { name: "Type oppskrift" }),
       { target: { value: "Genser" } },

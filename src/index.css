@@ -223,7 +223,7 @@ input[type="range"] {
 
 .library-layout {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   margin-top: 24px;
   align-items: start;
@@ -232,23 +232,27 @@ input[type="range"] {
   min-width: 0;
 }
 .recipe-filters {
+  min-width: 0;
+}
+.filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+}
+.recipe-search {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+.filter-options {
   display: grid;
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+  padding: 16px;
   background: #fff;
   border: 1px solid #e6ddd2;
   border-radius: 12px;
-}
-.recipe-filters h2 {
-  margin-bottom: 0;
-}
-.recipe-filters > button {
-  color: #8e3f58;
-  background: #fff;
-  border-color: #e6ddd2;
-}
-.recipe-filters > button:hover {
-  background: #f8eef1;
 }
 .recipe-grid {
   display: grid;
@@ -281,17 +285,6 @@ input[type="range"] {
 }
 .recipe-card:nth-child(4n + 4) .recipe-cover {
   background: #916674;
-}
-.pdf-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 2px 8px;
-  color: #8e3f58;
-  background: #fff;
-  border-radius: 999px;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 10px;
 }
 .recipe-card-body {
   display: grid;
@@ -422,10 +415,6 @@ progress::-moz-progress-bar {
   main {
     padding: 28px;
   }
-  .library-layout {
-    grid-template-columns: 200px minmax(0, 1fr);
-    gap: 18px;
-  }
   .recipe-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -446,13 +435,6 @@ progress::-moz-progress-bar {
   }
   .library-layout {
     grid-template-columns: 1fr;
-  }
-  .recipe-filters {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .recipe-filters h2 {
-    grid-column: 1 / -1;
   }
   .project-board {
     grid-template-columns: 1fr;
@@ -518,8 +500,11 @@ progress::-moz-progress-bar {
   form > button {
     width: 100%;
   }
-  .recipe-filters {
-    padding: 16px;
+  .filter-options {
+    grid-template-columns: 1fr;
+  }
+  .recipe-search {
+    flex-basis: 100%;
   }
   .recipe-grid {
     gap: 12px;
@@ -537,8 +522,7 @@ progress::-moz-progress-bar {
 }
 
 @media (max-width: 359px) {
-  .recipe-grid,
-  .recipe-filters {
+  .recipe-grid {
     grid-template-columns: 1fr;
   }
 }
