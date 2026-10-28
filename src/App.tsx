@@ -132,10 +132,6 @@ function App() {
           <div id="recipe-form-panel" hidden={!recipeFormOpen}>
             <RecipeForm onCreate={handleCreateRecipe} />
           </div>
-          <p className="page-description">
-            Samle oppskriftene dine her. En oppskrift kan brukes i flere
-            prosjekter.
-          </p>
           <div className="library-layout">
             <RecipeFilters filters={filters} onChange={setFilters} />
             <div className="library-results">
