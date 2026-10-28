@@ -21,6 +21,33 @@ They are not uploaded to a server or shared with other visitors.
 - View projects grouped by status
 - Store patterns, projects and PDFs locally
 
+## Screenshots
+
+### Recipe library
+
+![Recipe library](docs/screenshots/recipe_library.png)
+
+### Projects
+
+![Projects](docs/screenshots/projects.png)
+
+<details>
+<summary>More screenshots</summary>
+
+### Filter bar
+
+![Filter bar](docs/screenshots/filter_bar.png)
+
+### New recipe form
+
+![New recipe form](docs/screenshots/new_recipe_form.png)
+
+### New project form
+
+![New project form](docs/screenshots/new_project_form.png)
+
+</details>
+
 ## Using the app
 
 Use the navigation to switch between recipes and projects.
@@ -32,11 +59,12 @@ The recipe library displays saved patterns as cards.
 
 Select **Legg til oppskrift** to open the form.
 Use **Lukk oppskriftsskjema** to close it.
-Closing and reopening the form keeps unsaved input during the current session.
+Closing and reopening the form keeps unsaved input.
 
 Use the search field to find patterns by name.
 Select **Filtrer** to show or hide the other filters.
-Selected filters remain active when the controls are hidden. Select **Nullstill filtre** to clear the search and filters.
+Selected filters remain active when the controls are hidden.
+Select **Nullstill filtre** to clear the search and filters.
 
 ### Projects
 
@@ -48,16 +76,6 @@ Projects are displayed in groups based on their status.
 
 Unsaved form input is kept when closing a form or switching between pages.
 It is not preserved after reloading or closing the app.
-
-## Screenshots
-
-### Recipe library
-
-![Recipe library with filters and recipe cards](docs/screenshots/strikkeapp1.png)
-
-### Projects
-
-![Projects grouped by status](docs/screenshots/strikkeapp2.png)
 
 ## Design
 
@@ -171,5 +189,5 @@ workflow and language policy.
 
 ## AI usage
 
-See the [AI usage documentation](docs/ai-usage.md) for details on how
-AI assistance is used and a log of notable use.
+See the [AI usage documentation](docs/ai-usage.md) for how
+AI assistance is used and reviewed in this project.
