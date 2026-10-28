@@ -1,39 +1,32 @@
 # AI usage
 
-This project is a learning and portfolio project. AI assistance (Claude) is used as a tool, in a way that keeps the author in control and responsible for every line.
+Strikkeapp is a personal learning project. I use Claude and ChatGPT
+for explanations, suggestions, debugging and drafts of code,
+tests and documentation.
 
-## Principles
+Some assistance includes complete functions and components,
+rather than only small code suggestions.
 
-- The author reads, runs and understands every change before it is committed
-- The author makes all the decisions.
-- AI use is documented openly in this file and in the pull request template
+## My responsibility
 
-## What AI is used for
+I choose the scope, design and implementation approach.
+My workflow is to review suggested changes, understand the code,
+run the relevant checks and test the behavior in the browser
+before merging.
 
-- Explaining concepts, code and error messages
-- Suggesting an issue breakdown, templates and documentation drafts
-- Drafting boilerplate code and test cases that the author then reviews and adapts
-- Reviewing code for bugs, edge cases and accessibility
+AI suggestions can be incorrect. Passing automated checks does
+not replace reviewing the code or trying the app.
 
-## What AI is not used for
+## Examples
 
-- Committing code that the author cannot explain
-- Making architectural decisions without the author understanding the trade-offs
-- Skipping tests, type checks or review
+- Debugging PDF storage and opening, including the storage problem
+  found during private browsing, and drafting regression tests
+- Clarifying form labels and adding navigation between recipes
+  and projects
+- Reviewing and restructuring planned issues
+- Drafting interface changes based on my Figma design, including
+  responsive layouts, form controls and tests
+- Updating the README and explaining development tools and errors
 
-## Review process
-
-1. AI-suggested code is typed or pasted in small steps, never as one large change
-2. The author runs type check, lint, tests and build
-3. The author checks behavior in the browser
-4. Notable use is added to the log below
-
-## Log
-
-| Date       | Issue / PR                     | AI helped with                                                                      | Author's contribution                                                                                                    |
-| ---------- | ------------------------------ | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| 2026-10-12 | Templates                      | suggested templates                                                                 | modified them to suit my own needs                                                                                       |
-| 2026-10-12 | Issue backlog                  | Proposing an issue breakdown, order and dependencies                                | Reviewed and edited the issues, decided scope and priorities, created them on GitHub                                     |
-| 2026-10-13 | Workflow and AI docs (#24-#25) | Drafting the git workflow, issue guidelines, language policy and AI usage documents | Reviewed the content and adapted it to how I actually work                                                               |
-| 2026-10-13 | Recipe categories (#26)        | Suggesting the fix. It also suggested a legacy-value migration that was not needed  | Decided to drop the migration because only test data existed, removed the commits with an interactive rebase             |
-| 2026-10-13 | CI and tooling (#28)           | CI steps, coverage setup and Dependabot configuration                               | Found that `eslint-plugin-jsx-a11y` does not support ESLint 10, refused `--force`, and moved that task to the ally issue |
+These examples describe substantial assistance. I do not keep
+a separate record of every small suggestion or explanation.
