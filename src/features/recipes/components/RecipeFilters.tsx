@@ -8,11 +8,13 @@ interface RecipeFiltersProps {
 
 export function RecipeFilters({ filters, onChange }: RecipeFiltersProps) {
   return (
-    <section aria-label="Filtrer oppskrifter">
+    <section aria-label="Filtrer oppskrifter" className="recipe-filters">
+      <h2>Filtrer</h2>
       <label>
         Søk
         <input
           type="search"
+          placeholder="Søk etter navn"
           value={filters.search}
           onChange={(event) =>
             onChange({
@@ -24,7 +26,7 @@ export function RecipeFilters({ filters, onChange }: RecipeFiltersProps) {
       </label>
 
       <label>
-        Kategori
+        Type oppskrift
         <select
           value={filters.category}
           onChange={(event) =>
