@@ -1,10 +1,9 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-
 import App from "../App";
 
 function openPage(hash: string) {
-  window.location.hash = hash;
+  window.history.replaceState(null, "", hash);
   window.dispatchEvent(new HashChangeEvent("hashchange"));
 }
 
@@ -19,61 +18,58 @@ describe("navigation", () => {
 
   it("shows recipes by default", () => {
     render(<App />);
-
     expect(
-      screen.getByRole("heading", { name: "Ny oppskrift" }),
+      screen.getByRole("heading", { level: 1, name: "Oppskriftsbibliotek" }),
     ).toBeInTheDocument();
-
+    expect(screen.getByRole("link", { name: "Oppskrifter" })).toHaveAttribute(
+      "href",
+      "#/recipes",
+    );
     expect(screen.getByRole("link", { name: "Oppskrifter" })).toHaveAttribute(
       "aria-current",
       "page",
+    );
+    expect(screen.getByRole("link", { name: "Prosjekter" })).toHaveAttribute(
+      "href",
+      "#/projects",
     );
   });
 
   it("opens the projects page from a direct link", () => {
     openPage("#/projects");
-
     render(<App />);
-
     expect(
-      screen.getByRole("heading", { name: "Nytt prosjekt" }),
+      screen.getByRole("heading", { level: 1, name: "Prosjekter" }),
     ).toBeInTheDocument();
-
     expect(screen.getByRole("link", { name: "Prosjekter" })).toHaveAttribute(
       "aria-current",
       "page",
     );
   });
 
-  it("switches between recipes and projects", () => {
+  it("switches pages without losing unsaved form input", () => {
     render(<App />);
-
-    act(() => {
-      openPage("#/projects");
-    });
-
+    fireEvent.click(screen.getByRole("button", { name: "Legg til oppskrift" }));
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Navn på oppskrift" }),
+      { target: { value: "Min genser" } },
+    );
+    act(() => openPage("#/projects"));
     expect(
-      screen.getByRole("heading", { name: "Nytt prosjekt" }),
+      screen.getByRole("heading", { level: 1, name: "Prosjekter" }),
     ).toBeInTheDocument();
-
     expect(
-      screen.queryByRole("heading", { name: "Ny oppskrift" }),
+      screen.queryByRole("heading", { level: 1, name: "Oppskriftsbibliotek" }),
     ).not.toBeInTheDocument();
-
-    act(() => {
-      openPage("#/recipes");
-    });
-
+    act(() => openPage("#/recipes"));
     expect(
-      screen.getByRole("heading", { name: "Ny oppskrift" }),
-    ).toBeInTheDocument();
+      screen.getByRole("textbox", { name: "Navn på oppskrift" }),
+    ).toHaveValue("Min genser");
   });
 
   it("shows a message for an unknown page", () => {
     openPage("#/unknown");
-
     render(<App />);
-
     expect(
       screen.getByRole("heading", { name: "Siden finnes ikke" }),
     ).toBeInTheDocument();
