@@ -3,10 +3,9 @@ import { RecipeCard } from "./RecipeCard";
 
 interface RecipeListProps {
   recipes: Recipe[];
-  onOpenPdf: (pdfId: string) => void;
 }
 
-export function RecipeList({ recipes, onOpenPdf }: RecipeListProps) {
+export function RecipeList({ recipes }: RecipeListProps) {
   if (recipes.length === 0) {
     return <p className="empty-state">Du har ingen oppskrifter ennå.</p>;
   }
@@ -14,7 +13,7 @@ export function RecipeList({ recipes, onOpenPdf }: RecipeListProps) {
   return (
     <section aria-label="Oppskrifter" className="recipe-grid">
       {recipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} onOpenPdf={onOpenPdf} />
+        <RecipeCard key={recipe.id} recipe={recipe} />
       ))}
     </section>
   );
