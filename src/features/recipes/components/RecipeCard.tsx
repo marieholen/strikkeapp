@@ -22,7 +22,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           className="recipe-open-link"
           href={`#/recipes/${encodeURIComponent(recipe.id)}`}
         >
-          Åpne oppskrift
+          Åpne
         </a>
       </div>
     </article>

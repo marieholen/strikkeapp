@@ -12,14 +12,18 @@ export function RecipeDetail({ recipe, onOpenPdf }: RecipeDetailProps) {
       <section className="empty-state">
         <h1>Oppskriften finnes ikke</h1>
         <p>Oppskriften kan være slettet eller lagret i en annen nettleser.</p>
-        <a href="#/recipes">Tilbake til biblioteket</a>
+        <a className="recipe-back-link" href="#/recipes">
+          Tilbake
+        </a>
       </section>
     );
   }
 
   return (
     <section className="recipe-detail">
-      <a href="#/recipes">Tilbake til biblioteket</a>
+      <a className="recipe-back-link" href="#/recipes">
+        Tilbake
+      </a>
       <header className="page-header">
         <h1>{recipe.title}</h1>
       </header>

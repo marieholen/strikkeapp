@@ -31,9 +31,10 @@ describe("recipe details", () => {
 
   it("links every card to its details and keeps notes off the card", () => {
     render(<App />);
-    expect(
-      screen.getByRole("link", { name: "Åpne oppskrift" }),
-    ).toHaveAttribute("href", detailHash);
+    expect(screen.getByRole("link", { name: "Åpne" })).toHaveAttribute(
+      "href",
+      detailHash,
+    );
     expect(
       screen.queryByText("Middels", { selector: ".recipe-card p" }),
     ).not.toBeInTheDocument();
@@ -66,9 +67,10 @@ describe("recipe details", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: recipe.title }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Tilbake til biblioteket" }),
-    ).toHaveAttribute("href", "#/recipes");
+    expect(screen.getByRole("link", { name: "Tilbake" })).toHaveAttribute(
+      "href",
+      "#/recipes",
+    );
   });
 
   it("shows helpful empty notes and PDF messages", () => {
@@ -90,9 +92,10 @@ describe("recipe details", () => {
     expect(
       screen.getByRole("heading", { name: "Oppskriften finnes ikke" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Tilbake til biblioteket" }),
-    ).toHaveAttribute("href", "#/recipes");
+    expect(screen.getByRole("link", { name: "Tilbake" })).toHaveAttribute(
+      "href",
+      "#/recipes",
+    );
   });
 
   it("handles malformed encoded IDs without crashing", () => {

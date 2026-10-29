@@ -537,13 +537,24 @@ progress::-moz-progress-bar {
   }
 }
 
-.recipe-open-link {
+.recipe-open-link,
+.recipe-back-link {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   justify-self: start;
   color: #8e3f58;
   font-weight: 500;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #e6ddd2;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.recipe-open-link:hover,
+.recipe-back-link:hover {
+  background: #f8eef1;
+  border-color: #8e3f58;
 }
 .recipe-detail {
   max-width: 850px;
