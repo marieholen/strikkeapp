@@ -3,11 +3,18 @@ import { RecipeCard } from "./RecipeCard";
 
 interface RecipeListProps {
   recipes: Recipe[];
+  totalRecipes: number;
 }
 
-export function RecipeList({ recipes }: RecipeListProps) {
+export function RecipeList({ recipes, totalRecipes }: RecipeListProps) {
   if (recipes.length === 0) {
-    return <p className="empty-state">Du har ingen oppskrifter ennå.</p>;
+    return (
+      <p className="empty-state" role="status">
+        {totalRecipes === 0
+          ? "Du har ingen oppskrifter ennå."
+          : "Ingen oppskrifter passer søket eller filtrene."}
+      </p>
+    );
   }
 
   return (
