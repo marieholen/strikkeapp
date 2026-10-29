@@ -11,6 +11,7 @@ vi.mock("../features/recipes/pdfStorage", () => ({
 
 describe("opening a saved PDF", () => {
   beforeEach(() => {
+    window.history.replaceState(null, "", "#/recipes/recipe-1");
     localStorage.setItem(
       "strikkeoppskrift-recipes",
       JSON.stringify([
@@ -35,6 +36,7 @@ describe("opening a saved PDF", () => {
   });
 
   afterEach(() => {
+    window.history.replaceState(null, "", window.location.pathname);
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
