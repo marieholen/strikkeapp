@@ -30,95 +30,104 @@ export async function savePdf(file: File): Promise<string> {
 
   const id = crypto.randomUUID();
 
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction(STORE_NAME, "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
+  try {
+    return await new Promise((resolve, reject) => {
+      const transaction = database.transaction(STORE_NAME, "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.put(bytes, id);
+      const request = store.put(bytes, id);
 
-    request.onsuccess = () => {
-      resolve(id);
-    };
+      request.onerror = () => {
+        reject(new Error("Kunne ikke lagre PDF-filen."));
+      };
 
-    request.onerror = () => {
-      reject(new Error("Kunne ikke lagre PDF-filen."));
-    };
+      transaction.oncomplete = () => {
+        resolve(id);
+      };
 
-    transaction.oncomplete = () => {
-      database.close();
-    };
+      transaction.onabort = () => {
+        reject(new Error("PDF-transaksjonen ble avbrutt."));
+      };
 
-    transaction.onerror = () => {
-      database.close();
-      reject(new Error("Kunne ikke lagre PDF-filen."));
-    };
-  });
+      transaction.onerror = () => {
+        reject(new Error("Kunne ikke lagre PDF-filen."));
+      };
+    });
+  } finally {
+    database.close();
+  }
 }
 
 export async function getPdf(id: string): Promise<Blob> {
   const database = await openDatabase();
 
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction(STORE_NAME, "readonly");
-    const store = transaction.objectStore(STORE_NAME);
+  try {
+    return await new Promise((resolve, reject) => {
+      const transaction = database.transaction(STORE_NAME, "readonly");
+      const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.get(id);
+      const request = store.get(id);
 
-    request.onsuccess = () => {
-      const result = request.result;
+      request.onsuccess = () => {
+        const result = request.result;
 
-      if (!result) {
-        reject(new Error("PDF-filen ble ikke funnet."));
-        return;
-      }
+        if (!result) {
+          reject(new Error("PDF-filen ble ikke funnet."));
+          return;
+        }
 
-      if (result instanceof ArrayBuffer) {
-        resolve(new Blob([result], { type: "application/pdf" }));
-        return;
-      }
+        if (result instanceof ArrayBuffer) {
+          resolve(new Blob([result], { type: "application/pdf" }));
+          return;
+        }
 
-      resolve(result as Blob);
-    };
+        resolve(result as Blob);
+      };
 
-    request.onerror = () => {
-      reject(new Error("Kunne ikke hente PDF-filen."));
-    };
+      request.onerror = () => {
+        reject(new Error("Kunne ikke hente PDF-filen."));
+      };
 
-    transaction.oncomplete = () => {
-      database.close();
-    };
+      transaction.onabort = () => {
+        reject(new Error("PDF-transaksjonen ble avbrutt."));
+      };
 
-    transaction.onerror = () => {
-      database.close();
-      reject(new Error("Kunne ikke hente PDF-filen."));
-    };
-  });
+      transaction.onerror = () => {
+        reject(new Error("Kunne ikke hente PDF-filen."));
+      };
+    });
+  } finally {
+    database.close();
+  }
 }
 
 export async function deletePdf(id: string): Promise<void> {
   const database = await openDatabase();
 
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction(STORE_NAME, "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
+  try {
+    return await new Promise((resolve, reject) => {
+      const transaction = database.transaction(STORE_NAME, "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.delete(id);
+      const request = store.delete(id);
 
-    request.onsuccess = () => {
-      resolve();
-    };
+      request.onerror = () => {
+        reject(new Error("Kunne ikke slette PDF-filen."));
+      };
 
-    request.onerror = () => {
-      reject(new Error("Kunne ikke slette PDF-filen."));
-    };
+      transaction.oncomplete = () => {
+        resolve();
+      };
 
-    transaction.oncomplete = () => {
-      database.close();
-    };
+      transaction.onabort = () => {
+        reject(new Error("PDF-transaksjonen ble avbrutt."));
+      };
 
-    transaction.onerror = () => {
-      database.close();
-      reject(new Error("Kunne ikke slette PDF-filen."));
-    };
-  });
+      transaction.onerror = () => {
+        reject(new Error("Kunne ikke slette PDF-filen."));
+      };
+    });
+  } finally {
+    database.close();
+  }
 }
