@@ -1,8 +1,8 @@
 // @vitest-environment node
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getPdf, savePdf } from "../features/recipes/pdfStorage";
+import { deletePdf, getPdf, savePdf } from "../features/recipes/pdfStorage";
 
 function resetDatabase(): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -43,6 +43,7 @@ function storeOldPdf(id: string, pdf: Blob): Promise<void> {
 }
 
 describe("PDF storage", () => {
+  afterEach(() => vi.restoreAllMocks());
   beforeEach(async () => {
     await resetDatabase();
   });
@@ -78,5 +79,45 @@ describe("PDF storage", () => {
     await expect(getPdf("missing")).rejects.toThrow(
       "PDF-filen ble ikke funnet.",
     );
+  });
+
+  it("deletes a saved PDF", async () => {
+    const id = await savePdf(new File(["PDF"], "test.pdf"));
+    await deletePdf(id);
+    await expect(getPdf(id)).rejects.toThrow("PDF-filen ble ikke funnet.");
+  });
+
+  it("rejects saving when the transaction aborts after request success", async () => {
+    const put = IDBObjectStore.prototype.put;
+    vi.spyOn(IDBObjectStore.prototype, "put").mockImplementation(function (
+      this: IDBObjectStore,
+      ...args
+    ) {
+      const request = put.apply(this, args);
+      request.addEventListener("success", () => this.transaction.abort());
+      return request;
+    });
+    await expect(savePdf(new File(["PDF"], "test.pdf"))).rejects.toThrow(
+      "PDF-transaksjonen ble avbrutt.",
+    );
+    await resetDatabase();
+  });
+
+  it("keeps a PDF when its deletion aborts after request success", async () => {
+    const id = await savePdf(new File(["PDF"], "test.pdf"));
+    const remove = IDBObjectStore.prototype.delete;
+    vi.spyOn(IDBObjectStore.prototype, "delete").mockImplementation(function (
+      this: IDBObjectStore,
+      key,
+    ) {
+      const request = remove.call(this, key);
+      request.addEventListener("success", () => this.transaction.abort());
+      return request;
+    });
+    await expect(deletePdf(id)).rejects.toThrow(
+      "PDF-transaksjonen ble avbrutt.",
+    );
+    expect(await (await getPdf(id)).text()).toBe("PDF");
+    await resetDatabase();
   });
 });
