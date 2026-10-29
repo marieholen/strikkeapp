@@ -262,4 +262,27 @@ describe("recipe saving", () => {
     expect(savedRecipes()[0]).not.toHaveProperty("pdfId");
     expect(savePdf).not.toHaveBeenCalled();
   });
+
+  it.each(["abc", "0", "-2", "4, abc", "4,"])(
+    "blocks invalid needle sizes (%s) and allows correction",
+    async (input) => {
+      render(<App />);
+      fillRecipeForm();
+      const sizes = screen.getByRole("textbox", { name: "Pinnestørrelse" });
+      fireEvent.change(sizes, { target: { value: input } });
+      fireEvent.click(screen.getByRole("button", { name: "Lagre oppskrift" }));
+
+      expect(screen.getByRole("alert")).toHaveTextContent("Bruk positive tall");
+      expect(sizes).toHaveAttribute("aria-invalid", "true");
+      expect(sizes).toHaveValue(input);
+      expect(savedRecipes()).toHaveLength(0);
+      expect(savePdf).not.toHaveBeenCalled();
+
+      fireEvent.change(sizes, { target: { value: "3.5, 4" } });
+      fireEvent.click(screen.getByRole("button", { name: "Lagre oppskrift" }));
+      await waitFor(() => expect(savedRecipes()).toHaveLength(1));
+      expect(savedRecipes()[0].needleSizes).toEqual([3.5, 4]);
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    },
+  );
 });
