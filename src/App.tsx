@@ -156,7 +156,10 @@ function App() {
             <RecipeFilters filters={filters} onChange={setFilters} />
             <div className="library-results">
               <p className="result-count">{filteredRecipes.length} treff</p>
-              <RecipeList recipes={filteredRecipes} />
+              <RecipeList
+                recipes={filteredRecipes}
+                totalRecipes={recipes.length}
+              />
             </div>
           </div>
         </section>
