@@ -2,12 +2,9 @@ import type { Recipe } from "../recipeTypes";
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onOpenPdf: (pdfId: string) => void;
 }
 
-export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
-  const { pdfId } = recipe;
-
+export function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <article className="recipe-card">
       <div className="recipe-cover" aria-hidden="true">
@@ -21,28 +18,12 @@ export function RecipeCard({ recipe, onOpenPdf }: RecipeCardProps) {
           {recipe.category} · {recipe.needleSizes.join(", ")} mm
         </p>
 
-        <p className="card-meta">{recipe.difficulty}</p>
-
-        <p className="card-meta">
-          {recipe.used ? "Strikket før" : "Ikke brukt ennå"}
-        </p>
-
-        {recipe.notes && (
-          <details className="card-notes">
-            <summary>Notater</summary>
-            <p>{recipe.notes}</p>
-          </details>
-        )}
-
-        {pdfId && (
-          <button
-            className="secondary-button"
-            type="button"
-            onClick={() => onOpenPdf(pdfId)}
-          >
-            Åpne PDF
-          </button>
-        )}
+        <a
+          className="recipe-open-link"
+          href={`#/recipes/${encodeURIComponent(recipe.id)}`}
+        >
+          Åpne
+        </a>
       </div>
     </article>
   );

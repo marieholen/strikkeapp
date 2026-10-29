@@ -14,6 +14,7 @@ They are not uploaded to a server or shared with other visitors.
 ## Features
 
 - Create knitting patterns with notes and an optional PDF
+- Open a pattern detail view with notes and written instructions
 - Search and filter saved patterns
 - Open saved PDFs in a new browser tab
 - Create projects linked to a saved pattern
@@ -56,6 +57,11 @@ The navigation appears in a sidebar on desktop and at the bottom on mobile.
 ### Recipes
 
 The recipe library displays saved patterns as cards.
+Select **Åpne** to read the details, notes and written instructions.
+Line breaks in notes are preserved. Select **Åpne PDF** to open an attached PDF.
+Use **Tilbake** to return with your filters and unsaved input kept.
+Detail links can be opened directly and reloaded in the same browser.
+An unknown recipe link shows a message and a link back to the library.
 
 Select **Legg til oppskrift** to open the form.
 Use **Lukk oppskriftsskjema** to close it.

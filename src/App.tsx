@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { RecipeDetail } from "./features/recipes/components/RecipeDetail";
 import { RecipeList } from "./features/recipes/components/RecipeList";
 import { RecipeFilters } from "./features/recipes/components/RecipeFilters";
 import { RecipeForm } from "./features/recipes/components/RecipeForm";
@@ -21,11 +22,24 @@ const initialFilters: RecipeFiltersState = {
   used: "Alle",
 };
 
-function getCurrentPage() {
+type Page =
+  | { name: "recipes" | "projects" | "not-found" }
+  | { name: "recipe-detail"; recipeId: string };
+
+function getCurrentPage(): Page {
   const hash = window.location.hash;
-  if (hash === "" || hash === "#/" || hash === "#/recipes") return "recipes";
-  if (hash === "#/projects") return "projects";
-  return "not-found";
+  if (hash === "" || hash === "#/" || hash === "#/recipes")
+    return { name: "recipes" };
+  if (hash === "#/projects") return { name: "projects" };
+  const match = /^#\/recipes\/([^/]+)$/.exec(hash);
+  if (match) {
+    try {
+      return { name: "recipe-detail", recipeId: decodeURIComponent(match[1]) };
+    } catch {
+      return { name: "not-found" };
+    }
+  }
+  return { name: "not-found" };
 }
 
 function App() {
@@ -99,13 +113,18 @@ function App() {
         <nav aria-label="Hovedmeny" className="main-nav">
           <a
             href="#/recipes"
-            aria-current={currentPage === "recipes" ? "page" : undefined}
+            aria-current={
+              currentPage.name === "recipes" ||
+              currentPage.name === "recipe-detail"
+                ? "page"
+                : undefined
+            }
           >
             Oppskrifter
           </a>
           <a
             href="#/projects"
-            aria-current={currentPage === "projects" ? "page" : undefined}
+            aria-current={currentPage.name === "projects" ? "page" : undefined}
           >
             Prosjekter
           </a>
@@ -113,7 +132,7 @@ function App() {
       </aside>
 
       <main>
-        <section hidden={currentPage !== "recipes"}>
+        <section hidden={currentPage.name !== "recipes"}>
           <header className="page-header">
             <div>
               <h1>Oppskriftsbibliotek</h1>
@@ -137,12 +156,12 @@ function App() {
             <RecipeFilters filters={filters} onChange={setFilters} />
             <div className="library-results">
               <p className="result-count">{filteredRecipes.length} treff</p>
-              <RecipeList recipes={filteredRecipes} onOpenPdf={handleOpenPdf} />
+              <RecipeList recipes={filteredRecipes} />
             </div>
           </div>
         </section>
 
-        <section hidden={currentPage !== "projects"}>
+        <section hidden={currentPage.name !== "projects"}>
           <header className="page-header">
             <div>
               <h1>Prosjekter</h1>
@@ -167,7 +186,16 @@ function App() {
           <ProjectList projects={projects} recipes={recipes} />
         </section>
 
-        {currentPage === "not-found" && (
+        {currentPage.name === "recipe-detail" && (
+          <RecipeDetail
+            recipe={recipes.find(
+              (recipe) => recipe.id === currentPage.recipeId,
+            )}
+            onOpenPdf={handleOpenPdf}
+          />
+        )}
+
+        {currentPage.name === "not-found" && (
           <section className="empty-state">
             <h1>Siden finnes ikke</h1>
             <p>Bruk menyen for å gå til oppskrifter eller prosjekter.</p>

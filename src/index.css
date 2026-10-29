@@ -536,3 +536,54 @@ progress::-moz-progress-bar {
     grid-template-columns: 1fr;
   }
 }
+
+.recipe-open-link,
+.recipe-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  justify-self: start;
+  color: #8e3f58;
+  font-weight: 500;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #e6ddd2;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.recipe-open-link:hover,
+.recipe-back-link:hover {
+  background: #f8eef1;
+  border-color: #8e3f58;
+}
+.recipe-detail {
+  max-width: 850px;
+  padding: clamp(20px, 4vw, 36px);
+  background: #fff;
+  border: 1px solid #e6ddd2;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+.recipe-detail > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 16px;
+  color: #8e3f58;
+}
+.recipe-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 20px;
+  margin: 0 0 28px;
+}
+.recipe-facts dt {
+  color: #746e67;
+  font-size: 12px;
+}
+.recipe-facts dd {
+  margin: 4px 0 0;
+}
+.recipe-instructions {
+  white-space: pre-wrap;
+}
