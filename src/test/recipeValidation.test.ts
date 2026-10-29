@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  parseNeedleSizes,
   validateRecipeForm,
   type RecipeFormData,
 } from "../features/recipes/recipeValidation";
@@ -43,5 +44,44 @@ describe("validateRecipeForm", () => {
     });
 
     expect(result.needleSizes).toBe("Skriv inn minst én pinnestørrelse.");
+  });
+});
+
+describe("parseNeedleSizes", () => {
+  it.each([
+    ["3.5, 4", [3.5, 4]],
+    [" 2.25 , 4 , 10 ", [2.25, 4, 10]],
+    ["4", [4]],
+  ])("parses %s", (input, expected) => {
+    expect(parseNeedleSizes(input)).toEqual(expected);
+    expect(
+      validateRecipeForm({ ...validForm, needleSizes: input }).needleSizes,
+    ).toBeUndefined();
+  });
+
+  it.each([
+    "",
+    " ",
+    "abc",
+    "0",
+    "-2",
+    "4, abc",
+    "4, 0",
+    "4, -2",
+    "4,",
+    ",4",
+    "3,,4",
+    "Infinity",
+    "NaN",
+    "1e3",
+    "0x10",
+    "3.5 mm",
+    "3.5; 4",
+    "9".repeat(400),
+  ])("rejects %s without dropping invalid entries", (input) => {
+    expect(parseNeedleSizes(input)).toBeNull();
+    expect(
+      validateRecipeForm({ ...validForm, needleSizes: input }).needleSizes,
+    ).toBeTruthy();
   });
 });
