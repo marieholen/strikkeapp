@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import {
   recipeCategories,
@@ -9,6 +9,7 @@ import {
 } from "../recipeTypes";
 
 import {
+  parseNeedleSizes,
   validateRecipeForm,
   type RecipeFormData,
   type RecipeFormErrors,
@@ -30,6 +31,8 @@ const initialForm: RecipeFormData = {
 };
 
 export function RecipeForm({ onCreate }: RecipeFormProps) {
+  const needleHelpId = useId();
+  const needleErrorId = useId();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState<RecipeFormErrors>({});
   const [pdfFile, setPdfFile] = useState<File | undefined>();
@@ -55,8 +58,13 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
 
     setSaveError(null);
     const validationErrors = validateRecipeForm(form);
+    const needleSizes = parseNeedleSizes(form.needleSizes);
 
-    if (Object.keys(validationErrors).length > 0 || pdfError) {
+    if (
+      Object.keys(validationErrors).length > 0 ||
+      pdfError ||
+      needleSizes === null
+    ) {
       setErrors(validationErrors);
       return;
     }
@@ -70,10 +78,7 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
         id: crypto.randomUUID(),
         title: form.title.trim(),
         category: form.category as RecipeCategory,
-        needleSizes: form.needleSizes
-          .split(",")
-          .map((size) => Number(size.trim()))
-          .filter((size) => !Number.isNaN(size)),
+        needleSizes,
         difficulty: form.difficulty as RecipeDifficulty,
         used: form.used,
         notes: form.notes.trim(),
@@ -143,6 +148,8 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
             disabled={isSaving}
             type="text"
             placeholder="For eksempel 3.5, 4"
+            aria-describedby={`${needleHelpId}${errors.needleSizes ? ` ${needleErrorId}` : ""}`}
+            aria-invalid={Boolean(errors.needleSizes)}
             value={form.needleSizes}
             onChange={(event) =>
               setForm({ ...form, needleSizes: event.target.value })
@@ -150,7 +157,15 @@ export function RecipeForm({ onCreate }: RecipeFormProps) {
           />
         </label>
 
-        {errors.needleSizes && <p>{errors.needleSizes}</p>}
+        <p id={needleHelpId}>
+          Oppgi størrelser i mm. Bruk punktum som desimaltegn og komma mellom
+          størrelsene, for eksempel 3.5, 4.
+        </p>
+        {errors.needleSizes && (
+          <p id={needleErrorId} role="alert">
+            {errors.needleSizes}
+          </p>
+        )}
       </div>
 
       <div>
